@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
+import com.prolificinteractive.materialcalendarview.format.WeekDayColorFormatter;
 import com.prolificinteractive.materialcalendarview.format.WeekDayFormatter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
   private DateRangeIndex rangeIndex;
   private List<CalendarDay> selectedDates = new ArrayList<>();
   private WeekDayFormatter weekDayFormatter = WeekDayFormatter.DEFAULT;
+  private WeekDayColorFormatter weekDayColorFormatter = WeekDayColorFormatter.DEFAULT;
   private DayFormatter dayFormatter = DayFormatter.DEFAULT;
   private DayFormatter dayFormatterContentDescription = dayFormatter;
   private List<DayViewDecorator> decorators = new ArrayList<>();
@@ -90,6 +92,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
     newAdapter.maxDate = maxDate;
     newAdapter.selectedDates = selectedDates;
     newAdapter.weekDayFormatter = weekDayFormatter;
+    newAdapter.weekDayColorFormatter = weekDayColorFormatter;
     newAdapter.dayFormatter = dayFormatter;
     newAdapter.dayFormatterContentDescription = dayFormatterContentDescription;
     newAdapter.decorators = decorators;
@@ -145,6 +148,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
     pagerView.setSelectionEnabled(selectionEnabled);
 
     pagerView.setWeekDayFormatter(weekDayFormatter);
+    pagerView.setWeekDayColorFormatter(weekDayColorFormatter);
     pagerView.setDayFormatter(dayFormatter);
     pagerView.setDayFormatterContentDescription(dayFormatterContentDescription);
     if (color != null) {
@@ -228,6 +232,13 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
     this.weekDayFormatter = formatter;
     for (V pagerView : currentViews) {
       pagerView.setWeekDayFormatter(formatter);
+    }
+  }
+
+  public void setWeekDayColorFormatter(WeekDayColorFormatter colorFormatter) {
+    this.weekDayColorFormatter = colorFormatter;
+    for (V pagerView : currentViews) {
+      pagerView.setWeekDayColorFormatter(weekDayColorFormatter);
     }
   }
 

@@ -25,6 +25,7 @@
 
     <attr name="mcv_weekDayLabels" format="reference"/>
     <attr name="mcv_monthLabels" format="reference"/>
+    <attr name="mcv_weekDayColorLabels" format="reference" />
 
     <!-- We want to accept match_parent but not wrap_content. It'd be better if we could
     point to the real match_parent constant, but since it hasn't change since API 1,

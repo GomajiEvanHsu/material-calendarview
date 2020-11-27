@@ -1,5 +1,6 @@
 package com.prolificinteractive.materialcalendarview;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -9,6 +10,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
+import com.prolificinteractive.materialcalendarview.format.WeekDayColorFormatter;
 import com.prolificinteractive.materialcalendarview.format.WeekDayFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -145,6 +147,12 @@ abstract class CalendarPagerView extends ViewGroup
   public void setWeekDayFormatter(WeekDayFormatter formatter) {
     for (WeekDayView dayView : weekDayViews) {
       dayView.setWeekDayFormatter(formatter);
+    }
+  }
+
+  public void setWeekDayColorFormatter(WeekDayColorFormatter colorFormatter) {
+    for (WeekDayView dayView : weekDayViews) {
+      dayView.setWeekDayColorFormatter(colorFormatter);
     }
   }
 

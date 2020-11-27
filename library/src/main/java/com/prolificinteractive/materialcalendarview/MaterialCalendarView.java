@@ -1,5 +1,6 @@
 package com.prolificinteractive.materialcalendarview;
 
+
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -27,22 +29,26 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter;
+import com.prolificinteractive.materialcalendarview.format.CalendarWeekDayColorFormatter;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
+import com.prolificinteractive.materialcalendarview.format.WeekDayColorFormatter;
 import com.prolificinteractive.materialcalendarview.format.WeekDayFormatter;
+
+import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.temporal.WeekFields;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import org.threeten.bp.DayOfWeek;
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.temporal.WeekFields;
 
 /**
  * <p>
@@ -367,6 +373,11 @@ public class MaterialCalendarView extends ViewGroup {
       CharSequence[] array = a.getTextArray(R.styleable.MaterialCalendarView_mcv_weekDayLabels);
       if (array != null) {
         setWeekDayFormatter(new ArrayWeekDayFormatter(array));
+      }
+
+      CharSequence[] colorArray = a.getTextArray(R.styleable.MaterialCalendarView_mcv_weekDayColorLabels);
+      if (colorArray != null) {
+        setWeekDayColorFormatter((context1, dayOfWeek) -> colorArray[dayOfWeek.getValue() - 1].toString());
       }
 
       array = a.getTextArray(R.styleable.MaterialCalendarView_mcv_monthLabels);
@@ -938,6 +949,10 @@ public class MaterialCalendarView extends ViewGroup {
     adapter.setWeekDayFormatter(formatter == null ? WeekDayFormatter.DEFAULT : formatter);
   }
 
+  public void setWeekDayColorFormatter(WeekDayColorFormatter formatter) {
+    adapter.setWeekDayColorFormatter(formatter == null ? WeekDayColorFormatter.DEFAULT : formatter);
+  }
+
   /**
    * Set a formatter for day labels.
    *
@@ -957,6 +972,13 @@ public class MaterialCalendarView extends ViewGroup {
    */
   public void setWeekDayLabels(CharSequence[] weekDayLabels) {
     setWeekDayFormatter(new ArrayWeekDayFormatter(weekDayLabels));
+  }
+
+  /** 以程式碼控制標籤顏色
+   * @param weekDayColor 要擺放七個顏色 */
+  public void setWeekDayLabelColors(CharSequence[] weekDayColor) {
+    WeekDayColorFormatter weekDayColorFormatter = new CalendarWeekDayColorFormatter(weekDayColor);
+    adapter.setWeekDayColorFormatter(weekDayColorFormatter);
   }
 
   /**
