@@ -15,6 +15,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -406,14 +407,21 @@ public class MaterialCalendarView extends ViewGroup {
           R.styleable.MaterialCalendarView_mcv_allowClickDaysOutsideCurrentMonth,
           true
       ));
+
+      int id = a.getResourceId(
+              R.styleable.MaterialCalendarView_mcv_viewpagerBackground,
+              R.drawable.mcv_viewpager_background);
+      Drawable drawable = ContextCompat.getDrawable(context, id);
+      pager.setBackground(drawable);
+
+      // Adapter is created while parsing the TypedArray attrs, so setup has to happen after
+      setupChildren(a);
+
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
       a.recycle();
     }
-
-    // Adapter is created while parsing the TypedArray attrs, so setup has to happen after
-    setupChildren();
 
     currentMonth = CalendarDay.today();
     setCurrentDate(currentMonth);
@@ -429,8 +437,16 @@ public class MaterialCalendarView extends ViewGroup {
     }
   }
 
-  private void setupChildren() {
+  public void setViewPagerPadding(int left, int top, int right, int bottom) {
+    pager.setPadding(left, bottom, right, top);
+  }
+
+  private void setupChildren(TypedArray a) {
     addView(topbar);
+
+    int rightPadding = a.getInt(R.styleable.MaterialCalendarView_mcv_viewpagerRightPadding, 0);
+    int leftPadding = a.getInt(R.styleable.MaterialCalendarView_mcv_viewpagerLeftPadding, 0);
+    pager.setPadding(leftPadding, 0, rightPadding, 0);
 
     pager.setId(R.id.mcv_pager);
     pager.setOffscreenPageLimit(1);
