@@ -446,7 +446,9 @@ public class MaterialCalendarView extends ViewGroup {
 
     int rightPadding = a.getInt(R.styleable.MaterialCalendarView_mcv_viewpagerRightPadding, 0);
     int leftPadding = a.getInt(R.styleable.MaterialCalendarView_mcv_viewpagerLeftPadding, 0);
-    pager.setPadding(leftPadding, 0, rightPadding, 0);
+    int topPadding = a.getInt(R.styleable.MaterialCalendarView_mcv_viewpagerTopPadding, 0);
+    int bottomPadding = a.getInt(R.styleable.MaterialCalendarView_mcv_viewpagerBottomPadding, 0);
+    pager.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
 
     pager.setId(R.id.mcv_pager);
     pager.setOffscreenPageLimit(1);
