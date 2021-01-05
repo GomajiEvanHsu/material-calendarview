@@ -28,6 +28,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter;
@@ -188,7 +189,7 @@ public class MaterialCalendarView extends ViewGroup {
   private final CalendarPager pager;
   private CalendarPagerAdapter<?> adapter;
   private CalendarDay currentMonth;
-  private LinearLayout topbar;
+  private RelativeLayout topbar;
   private CalendarMode calendarMode;
   /**
    * Used for the dynamic calendar height.
